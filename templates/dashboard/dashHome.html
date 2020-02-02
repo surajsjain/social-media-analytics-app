@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block mainContent %}
+
+<div class="row mt-5">
+
+    <div class="col-xl-8 mb-5 mb-xl-0">
+        <div class="card shadow" style="display: inline-block; width: -webkit-fill-available;">
+            <div class="card-header bg-transparent">
+                <div class="col">
+                    <h6 class="text-uppercase text-dark ls-1 mb-1">Tweets</h6>
+                    <h2 class="text-dark mb-0">Here're the latest tweets</h2>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <!-- <blockquote class="twitter-tweet">
+                    <p lang="en" dir="ltr">A man killed a coyote with his bare hands after it grabbed his 2-year-old son by his jacket hood and dragged him to the ground <a href="https://t.co/prxrKnW91B">https://t.co/prxrKnW91B</a></p>&mdash; CNN
+                    (@CNN) <a href="https://twitter.com/CNN/status/1221096412756303872?ref_src=twsrc%5Etfw">January 25, 2020</a>
+                </blockquote> -->
+
+                {% for tweet in tweets %}
+                    {{ tweet.html | safe }}
+                {% endfor %}
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 mb-5 mb-xl-0">
+        <div class="card bg-gradient-default shadow" style="display: inline-block; width: -webkit-fill-available;">
+            <div class="card-header bg-transparent">
+                <div class="col">
+                    <h6 class="text-uppercase text-light ls-1 mb-1">Filter</h6>
+                    <h2 class="text-light mb-0">Filter the tweets you want to see</h2>
+                </div>
+            </div>
+
+            <div class="card-body bg-transparant">
+                <div class="col">
+
+                    <form class="" action="{% url 'dashHome' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="form-group text-light">
+                            <label for="sentiment">Sentiment</label>
+                            <select id="sentiment" name="sentiment" class="form-control text-dark">
+                                <option value="all" selected>All</option>
+                                <option value="positive">Positive</option>
+                                <!-- <option value="neutral">Neutral</option> -->
+                                <option value="negative">Negative</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group text-light">
+                            <label for="entity">Named Entity</label>
+                            <select id="entity" name="entity" class="form-control text-dark">
+                                <option value="all" selected>All</option>
+                                <!-- <option value="blrairport">Blrairport</option>
+                                <option value="pizzahut">Pizzahut</option>
+                                <option value="kfc">Kfc</option> -->
+
+                                {% for entity in entities %}
+                                    <option value="{{ entity.name }}">{{ entity.name }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" name="button" class="btn btn-success">Submit</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

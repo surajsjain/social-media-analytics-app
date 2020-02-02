@@ -1,0 +1,76 @@
+.card {
+    /* Add shadows to create the "card" effect */
+    display: inline-block;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+    width: 20%;
+    border-radius: 30%;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+    padding: 2px 16px;
+    text-align: center;
+    /* background-color: royalblue; */
+    /* color: white; */
+    font-weight: bolder;
+    font-family: sans-serif;
+    /* border-radius: 10%; */
+}
+
+.toc {
+    background-color: royalblue;
+    border-top-right-radius: 30%;
+    border-top-left-radius: 30%;
+    color: white;
+}
+
+.boc {
+    /* background-color: royalblue; */
+    border-bottom-right-radius: 30%;
+    border-bottom-left-radius: 30%;
+    /* color: white; */
+}
+
+.currentBudget {
+    background-color: green;
+    color: white
+}
+
+.currentBudget p {
+    margin: 0px;
+    margin-top: 5%;
+    font-size: 65%;
+}
+
+.currentBudget h4 {
+    margin-top: 8%;
+    text-align: center;
+    font-size: 154%;
+    margin-bottom: 8%;
+}
+
+/* .nameContainer{
+    border-radius: 4%;
+} */
+
+.cardTitleRow{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 6%;
+    background: royalblue;
+    color: white;
+}
+
+.basicCard{
+    display: inline-block;
+    float: left;
+    margin: 1%;
+}

@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block mainContent %}
+
+<div class="row mt-5">
+
+    <div class="col-xl-6 mb-5 mb-xl-0">
+        <div class="card bg-gradient-default shadow" style="display: inline-block; width: -webkit-fill-available;">
+            <div class="card-header bg-transparent">
+                <div class="col">
+                    <h2 class="text-light mb-0">Verified Customers</h2>
+                    <h6 class="text-uppercase text-light ls-1 mb-1">How many of your tweets are from verified customers?</h6>
+                </div>
+            </div>
+            <div class="card-body" id="piechart_div">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 mb-5 mb-xl-0">
+        <div class="card bg-gradient-default shadow" style="display: inline-block; width: -webkit-fill-available;">
+            <div class="card-header bg-transparent">
+                <div class="col">
+                    <h2 class="text-uppercase text-light ls-1 mb-1">Favourites Count</h2>
+                    <h6 class="text-uppercase text-light ls-1 mb-1">How's the favourites count of your tweeters?</h6>
+                </div>
+            </div>
+
+            <div class="card-body bg-transparant">
+                <div class="col" id="favourites_count_div">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-xl-12 mb-5 mb-xl-0">
+        <div class="card  shadow" style="display: inline-block; width: -webkit-fill-available;">
+            <div class="card-header bg-transparent">
+                <div class="col">
+                    <h2 class="text-uppercase text-dark ls-1 mb-1">Followers Count</h2>
+                    <h6 class="text-uppercase text-dark ls-1 mb-1">How many followers do your tweeters have?</h6>
+                </div>
+            </div>
+
+            <div class="card-body bg-transparant">
+                <div class="col" id="followers_count_div">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-xl-6 mb-5 mb-xl-0">
+        <div class="card bg-gradient-default shadow" style="display: inline-block; width: -webkit-fill-available;">
+            <div class="card-header bg-transparent">
+                <div class="col">
+                    <h2 class="text-uppercase text-light ls-1 mb-1">Following Count</h2>
+                    <h6 class="text-uppercase text-light ls-1 mb-1">How many accounts do your tweeters follow?</h6>
+                </div>
+            </div>
+
+            <div class="card-body bg-transparant">
+                <div class="col" id="following_count_div">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 mb-5 mb-xl-0">
+        <div class="card bg-gradient-default shadow" style="display: inline-block; width: -webkit-fill-available;">
+            <div class="card-header bg-transparent">
+                <div class="col">
+                    <h2 class="text-uppercase text-light ls-1 mb-1">Friends Count</h2>
+                    <h6 class="text-uppercase text-light ls-1 mb-1">How many friends do your tweeters have?</h6>
+                </div>
+            </div>
+
+            <div class="card-body bg-transparant">
+                <div class="col" id="friends_count_div">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
+{% block extraJS %}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    var ctxt_data = '{{ python_object|escapejs }}';
+    var ctxt_data = jQuery.parseJSON(ctxt_data);
+
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+
+    google.charts.setOnLoadCallback(main);
+
+    function main() {
+
+        // Verified Count
+        var verified = ctxt_data['verifications']['verified'];
+        var unverified = ctxt_data['verifications']['notVerified']
+
+        var verified_data = google.visualization.arrayToDataTable([
+            ['Status', 'Count'],
+            ['verified', verified],
+            ['notVerified', unverified],
+        ]);
+
+        var piechart_options = {
+            // title: 'Pie Chart: How Much Pizza I Ate Last Night',
+            width: 400,
+            height: 300
+        };
+        var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+        piechart.draw(verified_data, piechart_options);
+
+
+        // Favourites count
+
+        favs_count = ctxt_data['favs_count'];
+        console.log(favs_count);
+        var favourites_data = google.visualization.arrayToDataTable([
+            ["Range", "Count"],
+            ["0 - 10", favs_count["0 - 10"]],
+            ["10 - 100", favs_count["10 - 100"]],
+            ["100 - 1000", favs_count["100 - 1000"]],
+            ["1000 - 10,000", favs_count["1000 - 10,000"]],
+            ["10,000 +", favs_count["10,000 +"]],
+        ]);
+        var favourites_barchart_options = {
+            // title: 'Barchart: How Much Pizza I Ate Last Night',
+            width: 400,
+            height: 300,
+            legend: 'none'
+        };
+        var favourites_barchart = new google.visualization.BarChart(document.getElementById('favourites_count_div'));
+        favourites_barchart.draw(favourites_data, favourites_barchart_options);
+
+
+        // Followers count
+        followers_count = ctxt_data['followers_count'];
+        console.log(followers_count);
+        var followers_data = google.visualization.arrayToDataTable([
+            ["Range", "Count"],
+            ["0 - 10", followers_count["0 - 10"]],
+            ["10 - 100", followers_count["10 - 100"]],
+            ["100 - 1000", followers_count["100 - 1000"]],
+            ["1000 - 10,000", followers_count["1000 - 10,000"]],
+            ["10,000 +", followers_count["10,000 +"]],
+        ]);
+        var followers_barchart_options = {
+            // title: 'Barchart: How Much Pizza I Ate Last Night',
+            width: ($(window).width() * 0.75),
+            height: ($(window).width() * 0.3),
+            legend: 'none'
+        };
+        var followers_barchart = new google.visualization.ColumnChart(document.getElementById('followers_count_div'));
+        followers_barchart.draw(followers_data, followers_barchart_options);
+
+
+        // Following count
+        following_count = ctxt_data['following_count'];
+        console.log(following_count);
+        var following_count_data = google.visualization.arrayToDataTable([
+            ["Range", "Count"],
+            ["0 - 10", following_count["0 - 10"]],
+            ["10 - 100", following_count["10 - 100"]],
+            ["100 - 1000", following_count["100 - 1000"]],
+            ["1000 - 10,000", following_count["1000 - 10,000"]],
+            ["10,000 +", following_count["10,000 +"]],
+        ]);
+        var following_count_barchart_options = {
+            // title: 'Barchart: How Much Pizza I Ate Last Night',
+            width: 400,
+            height: 300,
+            legend: 'none'
+        };
+        var following_count_barchart = new google.visualization.ColumnChart(document.getElementById('following_count_div'));
+        following_count_barchart.draw(following_count_data, following_count_barchart_options);
+
+
+        // friends count
+        friends_count = ctxt_data['friends_count'];
+        console.log(friends_count);
+        var friends_count_data = google.visualization.arrayToDataTable([
+            ["Range", "Count"],
+            ["0 - 10", friends_count["0 - 10"]],
+            ["10 - 100", friends_count["10 - 100"]],
+            ["100 - 1000", friends_count["100 - 1000"]],
+            ["1000 - 10,000", friends_count["1000 - 10,000"]],
+            ["10,000 +", friends_count["10,000 +"]],
+        ]);
+        var friends_count_barchart_options = {
+            // title: 'Barchart: How Much Pizza I Ate Last Night',
+            width: 400,
+            height: 300,
+            legend: 'none'
+        };
+        var friends_count_barchart = new google.visualization.ColumnChart(document.getElementById('friends_count_div'));
+        friends_count_barchart.draw(friends_count_data, friends_count_barchart_options);
+    }
+</script>
+
+{% endblock %}

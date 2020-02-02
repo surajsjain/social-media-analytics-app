@@ -1,0 +1,7 @@
+*api_keys.txt
+twitterEnv/
+*.h5
+*.pickle
+*.csv
+twitterEnv/*
+*/twitterEnv/*

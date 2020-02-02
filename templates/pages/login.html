@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'pages/login.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Log In</title>
+
+    {% if user.is_authenticated %}
+        <script type="text/javascript">
+            window.open("{% url 'dashHome' %}", "_top")
+        </script>
+    {% endif %}
+</head>
+
+
+
+<body>
+    <!-- #303f9f indigo darken-2-->
+
+    <div class="container">
+        <div class="row">
+            <div id="two" class="col s6">
+                <div class="card">
+                    <div class="card-action">
+                        <h3>Login</h3>
+                    </div>
+                    <div class="card-content">
+                        <form class="" action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-field input-field">
+                                <i class="material-icons prefix">person</i>
+                                <label for="username">Username</label>
+                                <input type="text" id="username" placeholder="Required" name="username">
+                            </div>
+                            <div class="form-field input-field">
+                                <i class="material-icons prefix">lock</i>
+                                <label for="password">Password</label>
+                                <input type="password" id="password" placeholder="Required" name="password">
+                            </div>
+                            <div class="form-field">
+                                <button class="btn-large waves-effect waves-light" style="width:100%;" type="submit" name="button">Login <i class="material-icons right">send</i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s6 ">
+                <img id="one" src="{% static 'images/twitter_logo.jpg' %}" class="circle responsive-img" alt="">
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
