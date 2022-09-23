@@ -42,7 +42,7 @@ pexpect==4.8.0
 pickleshare==0.7.5
 postgres==3.0.0
 prompt-toolkit==3.0.2
-protobuf==3.11.2
+protobuf==3.18.3
 psycopg2-binary==2.8.4
 psycopg2-pool==1.1
 ptyprocess==0.6.0
